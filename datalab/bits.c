@@ -189,7 +189,7 @@ int allOddBits(int x) {
  *   Rating: 2
  */
 int negate(int x) {
-  return 2;
+  return ~x + 1;
 }
 //3
 /* 
@@ -202,7 +202,7 @@ int negate(int x) {
  *   Rating: 3
  */
 int isAsciiDigit(int x) {
-  return 2;
+  return !(((x >> 4) ^ 0x3) + ((x & 0xF + 0x6) >> 4));
 }
 /* 
  * conditional - same as x ? y : z 
@@ -212,7 +212,9 @@ int isAsciiDigit(int x) {
  *   Rating: 3
  */
 int conditional(int x, int y, int z) {
-  return 2;
+	int mask = !!x;            // mask is 1 if x is true, 0 otherwise
+	mask = ~mask + 1;           // mask is now all 1s if x was true, all 0s otherwise
+	return (y & mask) | (z & ~mask);
 }
 /* 
  * isLessOrEqual - if x <= y  then return 1, else return 0 
